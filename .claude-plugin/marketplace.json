@@ -1,0 +1,29 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "wyattjoh-marketplace",
+  "owner": {
+    "name": "Wyatt Johnson"
+  },
+  "metadata": {
+    "description": "Wyatt Johnson's Claude Code plugin marketplace",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "deno-lsp",
+      "description": "Deno Language Server integration for Claude Code",
+      "version": "0.1.0",
+      "author": {
+        "name": "Wyatt Johnson"
+      },
+      "repository": "https://github.com/wyattjoh/deno-lsp-claude-plugin",
+      "license": "MIT",
+      "keywords": ["deno", "lsp", "typescript", "javascript"],
+      "category": "development",
+      "source": {
+        "source": "github",
+        "repo": "wyattjoh/deno-lsp-claude-plugin"
+      }
+    }
+  ]
+}
