@@ -32,13 +32,13 @@
       "author": {
         "name": "Wyatt Johnson"
       },
-      "repository": "https://github.com/wyattjoh/remote-op",
+      "repository": "https://github.com/wyattjoh/op-remote",
       "license": "MIT",
       "keywords": ["1password", "telegram", "secrets", "mcp", "security"],
       "category": "security",
       "source": {
         "source": "github",
-        "repo": "wyattjoh/remote-op"
+        "repo": "wyattjoh/op-remote"
       }
     }
   ]
