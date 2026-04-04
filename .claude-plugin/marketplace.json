@@ -5,8 +5,7 @@
     "name": "Wyatt Johnson"
   },
   "metadata": {
-    "description": "Wyatt Johnson's Claude Code plugin marketplace",
-    "version": "0.1.0"
+    "description": "Wyatt Johnson's Claude Code plugin marketplace"
   },
   "plugins": [
     {
