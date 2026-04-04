@@ -17,7 +17,12 @@
       },
       "repository": "https://github.com/wyattjoh/deno-lsp-claude-plugin",
       "license": "MIT",
-      "keywords": ["deno", "lsp", "typescript", "javascript"],
+      "keywords": [
+        "deno",
+        "lsp",
+        "typescript",
+        "javascript"
+      ],
       "category": "development",
       "source": {
         "source": "github",
@@ -27,18 +32,24 @@
     {
       "name": "op-remote",
       "description": "Remote 1Password secret access with Telegram approval for AI agents",
-      "version": "0.2.1",
+      "version": "0.3.0",
       "author": {
         "name": "Wyatt Johnson"
       },
       "repository": "https://github.com/wyattjoh/op-remote",
       "license": "MIT",
-      "keywords": ["1password", "telegram", "secrets", "mcp", "security"],
+      "keywords": [
+        "1password",
+        "telegram",
+        "secrets",
+        "mcp",
+        "security"
+      ],
       "category": "security",
       "source": {
         "source": "github",
         "repo": "wyattjoh/op-remote",
-        "ref": "op-remote-v0.2.1"
+        "ref": "op-remote-v0.3.0"
       }
     },
     {
@@ -50,7 +61,12 @@
       },
       "repository": "https://github.com/wyattjoh/dokploy-mcp",
       "license": "MIT",
-      "keywords": ["dokploy", "mcp", "deployment", "docker"],
+      "keywords": [
+        "dokploy",
+        "mcp",
+        "deployment",
+        "docker"
+      ],
       "category": "development",
       "source": {
         "source": "github",
