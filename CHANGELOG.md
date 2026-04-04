@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/wyattjoh/claude-code-marketplace/compare/v1.1.0...v1.1.1) (2026-04-04)
+
+
+### Bug Fixes
+
+* use feat commit type for plugin version updates ([d8f8277](https://github.com/wyattjoh/claude-code-marketplace/commit/d8f8277360aac166caf557b4571eaf0db32b01da))
+
 ## [1.1.0](https://github.com/wyattjoh/claude-code-marketplace/compare/v1.0.0...v1.1.0) (2026-04-04)
 
 
