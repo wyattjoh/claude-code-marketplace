@@ -87,7 +87,7 @@ runs:
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
 
-        COMMIT_MSG="chore(${PLUGIN_NAME}): bump to ${VERSION}"
+        COMMIT_MSG="feat(${PLUGIN_NAME}): bump to ${VERSION}"
 
         PR_BODY="Automated plugin version update.
 
