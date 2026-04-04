@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/wyattjoh/claude-code-marketplace/compare/v1.0.0...v1.1.0) (2026-04-04)
+
+
+### Features
+
+* add floating major/minor tags on release ([054f5ec](https://github.com/wyattjoh/claude-code-marketplace/commit/054f5ec03f07ec6fb83867c7561fad85927dd49e))
+
 ## 1.0.0 (2026-04-04)
 
 
