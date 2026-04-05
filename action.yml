@@ -52,10 +52,11 @@ runs:
           exit 1
         fi
 
-        # Check if version is already current
-        CURRENT=$(jq -r --arg name "$PLUGIN_NAME" '.plugins[] | select(.name == $name) | .version' "$JSON_FILE")
-        if [ "$CURRENT" = "$VERSION" ]; then
-          echo "Plugin '$PLUGIN_NAME' is already at version $VERSION. Nothing to do."
+        # Check if version and ref are already current
+        CURRENT_VERSION=$(jq -r --arg name "$PLUGIN_NAME" '.plugins[] | select(.name == $name) | .version' "$JSON_FILE")
+        CURRENT_REF=$(jq -r --arg name "$PLUGIN_NAME" '.plugins[] | select(.name == $name) | .source.ref' "$JSON_FILE")
+        if [ "$CURRENT_VERSION" = "$VERSION" ] && [ "$CURRENT_REF" = "$REF" ]; then
+          echo "Plugin '$PLUGIN_NAME' is already at version $VERSION (ref: $REF). Nothing to do."
           echo "skipped=true" >> "$GITHUB_OUTPUT"
           exit 0
         fi
@@ -85,7 +86,7 @@ runs:
         BRANCH="update/${PLUGIN_NAME}-${VERSION}"
 
         git config user.name "github-actions[bot]"
-        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
         COMMIT_MSG="feat(${PLUGIN_NAME}): bump to ${VERSION}"
 

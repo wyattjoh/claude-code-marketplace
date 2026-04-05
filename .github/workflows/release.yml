@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
 permissions:
   contents: write
   pull-requests: write
@@ -30,12 +34,6 @@ jobs:
           MAJOR="v${{ steps.release.outputs.major }}"
           MINOR="v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}"
 
-          git tag -d "$MAJOR" || true
-          git tag -d "$MINOR" || true
-          git push origin :"$MAJOR" || true
-          git push origin :"$MINOR" || true
-
-          git tag -a "$MAJOR" -m "Release $MAJOR"
-          git tag -a "$MINOR" -m "Release $MINOR"
-          git push origin "$MAJOR"
-          git push origin "$MINOR"
+          git tag -fa "$MAJOR" -m "Release $MAJOR"
+          git tag -fa "$MINOR" -m "Release $MINOR"
+          git push --force origin "$MAJOR" "$MINOR"
