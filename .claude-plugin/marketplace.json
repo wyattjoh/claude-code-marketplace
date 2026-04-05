@@ -73,6 +73,28 @@
         "repo": "wyattjoh/dokploy-mcp",
         "ref": "dokploy-mcp-v0.4.0"
       }
+    },
+    {
+      "name": "jmap-mcp",
+      "description": "MCP server for JMAP email management",
+      "version": "0.4.0",
+      "author": {
+        "name": "Wyatt Johnson"
+      },
+      "repository": "https://github.com/wyattjoh/jmap-mcp",
+      "license": "MIT",
+      "keywords": [
+        "jmap",
+        "email",
+        "mcp",
+        "fastmail"
+      ],
+      "category": "productivity",
+      "source": {
+        "source": "github",
+        "repo": "wyattjoh/jmap-mcp",
+        "ref": "jmap-mcp-v0.4.0"
+      }
     }
   ]
 }
