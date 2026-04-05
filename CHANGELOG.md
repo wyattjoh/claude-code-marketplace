@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/wyattjoh/claude-code-marketplace/compare/v1.1.1...v1.2.0) (2026-04-05)
+
+
+### Features
+
+* **jmap-mcp:** add jmap-mcp plugin to marketplace ([16ebfe6](https://github.com/wyattjoh/claude-code-marketplace/commit/16ebfe6a118acc03c5b88d66f0630b4757b5024a))
+
 ## [1.1.1](https://github.com/wyattjoh/claude-code-marketplace/compare/v1.1.0...v1.1.1) (2026-04-04)
 
 
