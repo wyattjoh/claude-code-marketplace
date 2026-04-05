@@ -1,0 +1,39 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: googleapis/release-please-action@v4
+        id: release
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/checkout@v4
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: Tag major and minor versions
+        if: ${{ steps.release.outputs.release_created }}
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+
+          MAJOR="v${{ steps.release.outputs.major }}"
+          MINOR="v${{ steps.release.outputs.major }}.${{ steps.release.outputs.minor }}"
+
+          git tag -fa "$MAJOR" -m "Release $MAJOR"
+          git tag -fa "$MINOR" -m "Release $MINOR"
+          git push --force origin "$MAJOR" "$MINOR"
