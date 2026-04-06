@@ -9,8 +9,7 @@ A Claude Code plugin marketplace registry. The core artifact is `.claude-plugin/
 ## Key Files
 
 - `.claude-plugin/marketplace.json` - The marketplace manifest. Each entry in the `plugins` array defines a plugin's name, version, description, source repo, and optional git ref.
-- `release-please-config.json` / `.release-please-manifest.json` - Automated versioning via release-please (simple release type, no component prefix in tags).
-- `.github/workflows/release.yml` - On push to main, runs release-please and creates floating `vMAJOR` and `vMAJOR.MINOR` tags alongside the full semver tag.
+- `README.md` - Includes an "Available Plugins" table that must stay in sync with the manifest.
 
 ## Adding or Updating a Plugin
 
@@ -19,14 +18,4 @@ Edit `.claude-plugin/marketplace.json`. Each plugin entry requires:
 - `source.source` (always `"github"`), `source.repo` (owner/repo format)
 - `source.ref` (optional git ref, used when the plugin tag differs from the marketplace tag)
 
-When bumping a plugin version, use `feat` commit type so release-please creates a minor version bump for the marketplace itself.
-
 When adding, removing, or updating plugins in `marketplace.json`, always update the "Available Plugins" table in `README.md` to match.
-
-## Versioning
-
-Releases are automated via release-please. Conventional Commits drive version bumps:
-- `feat:` triggers a minor bump
-- `fix:` triggers a patch bump
-
-Tags follow the pattern `v1.2.3` with floating `v1` and `v1.2` tags updated on each release.
