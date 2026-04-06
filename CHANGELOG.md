@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.5.0](https://github.com/wyattjoh/claude-code-marketplace/compare/v1.4.0...v1.5.0) (2026-04-06)
+
+
+### Features
+
+* **jmap-mcp:** bump to 0.6.1 ([#19](https://github.com/wyattjoh/claude-code-marketplace/issues/19)) ([e14cfeb](https://github.com/wyattjoh/claude-code-marketplace/commit/e14cfebf52427b66e54abd152c509dd0acd73997))
+* **op-remote:** bump to 0.4.1 ([#18](https://github.com/wyattjoh/claude-code-marketplace/issues/18)) ([3c3806e](https://github.com/wyattjoh/claude-code-marketplace/commit/3c3806e8299f0f3aa71d44352d515b8c486efc9f))
+
+
+### Bug Fixes
+
+* update plugin versions to include userConfig type/title fixes ([281c3bb](https://github.com/wyattjoh/claude-code-marketplace/commit/281c3bb23da538c51ef9d5d6e4c412bbbfe75d90))
+
 ## [1.4.0](https://github.com/wyattjoh/claude-code-marketplace/compare/v1.3.0...v1.4.0) (2026-04-06)
 
 
