@@ -55,7 +55,7 @@
     {
       "name": "dokploy-mcp",
       "description": "MCP server that wraps the Dokploy REST API",
-      "version": "0.6.0",
+      "version": "0.6.1",
       "author": {
         "name": "Wyatt Johnson"
       },
@@ -71,7 +71,7 @@
       "source": {
         "source": "github",
         "repo": "wyattjoh/dokploy-mcp",
-        "ref": "dokploy-mcp-v0.6.0"
+        "ref": "dokploy-mcp-v0.6.1"
       }
     },
     {
