@@ -49,13 +49,14 @@
       "source": {
         "source": "github",
         "repo": "wyattjoh/op-remote",
-        "ref": "op-remote-v0.4.1"
+        "ref": "op-remote-v0.4.1",
+        "sha": "6ddbc778164a66b367152c420af4b8930f57178c"
       }
     },
     {
       "name": "dokploy-mcp",
       "description": "MCP server that wraps the Dokploy REST API",
-      "version": "0.6.1",
+      "version": "0.6.0",
       "author": {
         "name": "Wyatt Johnson"
       },
@@ -71,7 +72,8 @@
       "source": {
         "source": "github",
         "repo": "wyattjoh/dokploy-mcp",
-        "ref": "dokploy-mcp-v0.6.1"
+        "ref": "dokploy-mcp-v0.6.0",
+        "sha": "50737cc1395746243c741036cd73e4f5d77df02c"
       }
     },
     {
@@ -93,7 +95,8 @@
       "source": {
         "source": "github",
         "repo": "wyattjoh/jmap-mcp",
-        "ref": "jmap-mcp-v0.6.1"
+        "ref": "jmap-mcp-v0.6.1",
+        "sha": "387a8079031f66f8fe4e29865e10ea896bcb737d"
       }
     }
   ]

@@ -52,24 +52,53 @@ runs:
           exit 1
         fi
 
-        # Check if version and ref are already current
+        # Resolve the ref to a commit SHA via git ls-remote
+        REPO=$(jq -r --arg name "$PLUGIN_NAME" '.plugins[] | select(.name == $name) | .source.repo' "$JSON_FILE")
+        REPO_URL="https://github.com/${REPO}"
+
+        # Try as a tag first; prefer the dereferenced commit SHA for annotated tags
+        TAG_OUTPUT=$(git ls-remote "$REPO_URL" "refs/tags/${REF}" "refs/tags/${REF}^{}" 2>/dev/null)
+        RESOLVED_SHA=""
+        if [ -n "$TAG_OUTPUT" ]; then
+          DEREF_SHA=$(echo "$TAG_OUTPUT" | grep '\^{}' | awk '{print $1}')
+          if [ -n "$DEREF_SHA" ]; then
+            RESOLVED_SHA="$DEREF_SHA"
+          else
+            RESOLVED_SHA=$(echo "$TAG_OUTPUT" | awk '{print $1}' | head -1)
+          fi
+        fi
+
+        # Fall back to branch if not found as a tag
+        if [ -z "$RESOLVED_SHA" ]; then
+          RESOLVED_SHA=$(git ls-remote "$REPO_URL" "refs/heads/${REF}" 2>/dev/null | awk '{print $1}')
+        fi
+
+        if [ -z "$RESOLVED_SHA" ]; then
+          echo "::error::Could not resolve ref '${REF}' to a SHA in repo '${REPO}'"
+          exit 1
+        fi
+
+        # Check if version, ref, and sha are already current
         CURRENT_VERSION=$(jq -r --arg name "$PLUGIN_NAME" '.plugins[] | select(.name == $name) | .version' "$JSON_FILE")
         CURRENT_REF=$(jq -r --arg name "$PLUGIN_NAME" '.plugins[] | select(.name == $name) | .source.ref' "$JSON_FILE")
-        if [ "$CURRENT_VERSION" = "$VERSION" ] && [ "$CURRENT_REF" = "$REF" ]; then
-          echo "Plugin '$PLUGIN_NAME' is already at version $VERSION (ref: $REF). Nothing to do."
+        CURRENT_SHA=$(jq -r --arg name "$PLUGIN_NAME" '.plugins[] | select(.name == $name) | .source.sha // ""' "$JSON_FILE")
+        if [ "$CURRENT_VERSION" = "$VERSION" ] && [ "$CURRENT_REF" = "$REF" ] && [ "$CURRENT_SHA" = "$RESOLVED_SHA" ]; then
+          echo "Plugin '$PLUGIN_NAME' is already at version $VERSION (ref: $REF, sha: $RESOLVED_SHA). Nothing to do."
           echo "skipped=true" >> "$GITHUB_OUTPUT"
           exit 0
         fi
 
-        # Update version and source.ref
+        # Update version, source.ref, and source.sha
         jq --arg name "$PLUGIN_NAME" \
            --arg ver "$VERSION" \
            --arg ref "$REF" \
-           '(.plugins[] | select(.name == $name)) |= (.version = $ver | .source.ref = $ref)' \
+           --arg sha "$RESOLVED_SHA" \
+           '(.plugins[] | select(.name == $name)) |= (.version = $ver | .source.ref = $ref | .source.sha = $sha)' \
            "$JSON_FILE" > tmp.json && mv tmp.json "$JSON_FILE"
 
-        echo "Updated $PLUGIN_NAME: $CURRENT -> $VERSION (ref: $REF)"
+        echo "Updated $PLUGIN_NAME: $CURRENT_VERSION -> $VERSION (ref: $REF, sha: $RESOLVED_SHA)"
         echo "skipped=false" >> "$GITHUB_OUTPUT"
+        echo "sha=${RESOLVED_SHA}" >> "$GITHUB_OUTPUT"
 
     - name: Create PR
       id: pr
@@ -83,6 +112,7 @@ runs:
         VERSION="${{ inputs.version }}"
         VERSION="${VERSION#v}"
         REF="${{ inputs.ref }}"
+        SHA="${{ steps.update.outputs.sha }}"
         BRANCH="update/${PLUGIN_NAME}-${VERSION}"
 
         git config user.name "github-actions[bot]"
@@ -94,7 +124,8 @@ runs:
 
         - **Plugin:** \`${PLUGIN_NAME}\`
         - **Version:** \`${VERSION}\`
-        - **Ref:** \`${REF}\`"
+        - **Ref:** \`${REF}\`
+        - **SHA:** \`${SHA}\`"
 
         # Check if branch already exists on remote
         if git ls-remote --exit-code --heads origin "$BRANCH" >/dev/null 2>&1; then
@@ -105,7 +136,8 @@ runs:
           jq --arg name "$PLUGIN_NAME" \
              --arg ver "$VERSION" \
              --arg ref "$REF" \
-             '(.plugins[] | select(.name == $name)) |= (.version = $ver | .source.ref = $ref)' \
+             --arg sha "$SHA" \
+             '(.plugins[] | select(.name == $name)) |= (.version = $ver | .source.ref = $ref | .source.sha = $sha)' \
              .claude-plugin/marketplace.json > tmp.json && mv tmp.json .claude-plugin/marketplace.json
           git add .claude-plugin/marketplace.json
           git diff --staged --quiet && { echo "No changes needed."; echo "url="; exit 0; }
