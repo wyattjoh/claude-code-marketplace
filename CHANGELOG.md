@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1](https://github.com/wyattjoh/claude-code-marketplace/compare/v1.5.0...v1.5.1) (2026-04-09)
+
+
+### Bug Fixes
+
+* require sha input from caller instead of resolving via git ls-remote ([ba14d36](https://github.com/wyattjoh/claude-code-marketplace/commit/ba14d3621bb83833b2e316d26dfe32e5c5cfeb6e))
+
 ## [1.5.0](https://github.com/wyattjoh/claude-code-marketplace/compare/v1.4.0...v1.5.0) (2026-04-06)
 
 
