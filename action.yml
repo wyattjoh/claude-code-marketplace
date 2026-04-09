@@ -11,6 +11,9 @@ inputs:
   ref:
     description: "Git ref to pin in source.ref (e.g., dokploy-mcp-v0.3.0)"
     required: true
+  sha:
+    description: "Commit SHA to pin in source.sha (e.g., github.sha from the calling workflow)."
+    required: true
   token:
     description: "Fine-grained PAT with contents:write + pull-requests:write on the marketplace repo"
     required: true
@@ -52,31 +55,7 @@ runs:
           exit 1
         fi
 
-        # Resolve the ref to a commit SHA via git ls-remote
-        REPO=$(jq -r --arg name "$PLUGIN_NAME" '.plugins[] | select(.name == $name) | .source.repo' "$JSON_FILE")
-        REPO_URL="https://github.com/${REPO}"
-
-        # Try as a tag first; prefer the dereferenced commit SHA for annotated tags
-        TAG_OUTPUT=$(git ls-remote "$REPO_URL" "refs/tags/${REF}" "refs/tags/${REF}^{}" 2>/dev/null)
-        RESOLVED_SHA=""
-        if [ -n "$TAG_OUTPUT" ]; then
-          DEREF_SHA=$(echo "$TAG_OUTPUT" | grep '\^{}' | awk '{print $1}')
-          if [ -n "$DEREF_SHA" ]; then
-            RESOLVED_SHA="$DEREF_SHA"
-          else
-            RESOLVED_SHA=$(echo "$TAG_OUTPUT" | awk '{print $1}' | head -1)
-          fi
-        fi
-
-        # Fall back to branch if not found as a tag
-        if [ -z "$RESOLVED_SHA" ]; then
-          RESOLVED_SHA=$(git ls-remote "$REPO_URL" "refs/heads/${REF}" 2>/dev/null | awk '{print $1}')
-        fi
-
-        if [ -z "$RESOLVED_SHA" ]; then
-          echo "::error::Could not resolve ref '${REF}' to a SHA in repo '${REPO}'"
-          exit 1
-        fi
+        RESOLVED_SHA="${{ inputs.sha }}"
 
         # Check if version, ref, and sha are already current
         CURRENT_VERSION=$(jq -r --arg name "$PLUGIN_NAME" '.plugins[] | select(.name == $name) | .version' "$JSON_FILE")
