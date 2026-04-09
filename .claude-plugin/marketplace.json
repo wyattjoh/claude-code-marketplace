@@ -77,6 +77,28 @@
       }
     },
     {
+      "name": "stacked-prs",
+      "description": "Manage stacked branches and pull requests with git config metadata, Deno helper scripts, and the gh CLI.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Wyatt Johnson"
+      },
+      "repository": "https://github.com/wyattjoh/stacked-prs",
+      "license": "MIT",
+      "keywords": [
+        "git",
+        "github",
+        "pull-requests",
+        "stacked-prs",
+        "rebase"
+      ],
+      "category": "development",
+      "source": {
+        "source": "github",
+        "repo": "wyattjoh/stacked-prs"
+      }
+    },
+    {
       "name": "jmap-mcp",
       "description": "MCP server for JMAP email management",
       "version": "0.6.1",
