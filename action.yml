@@ -75,9 +75,76 @@ runs:
            '(.plugins[] | select(.name == $name)) |= (.version = $ver | .source.ref = $ref | .source.sha = $sha)' \
            "$JSON_FILE" > tmp.json && mv tmp.json "$JSON_FILE"
 
+        SOURCE_REPO=$(jq -r --arg name "$PLUGIN_NAME" '.plugins[] | select(.name == $name) | .source.repo' "$JSON_FILE")
+
         echo "Updated $PLUGIN_NAME: $CURRENT_VERSION -> $VERSION (ref: $REF, sha: $RESOLVED_SHA)"
         echo "skipped=false" >> "$GITHUB_OUTPUT"
         echo "sha=${RESOLVED_SHA}" >> "$GITHUB_OUTPUT"
+        echo "current-version=${CURRENT_VERSION}" >> "$GITHUB_OUTPUT"
+        echo "source-repo=${SOURCE_REPO}" >> "$GITHUB_OUTPUT"
+
+    - name: Fetch upstream changelog
+      id: changelog
+      if: steps.update.outputs.skipped != 'true'
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.token }}
+        SOURCE_REPO: ${{ steps.update.outputs.source-repo }}
+        NEW_REF: ${{ inputs.ref }}
+        NEW_VERSION: ${{ inputs.version }}
+        OLD_VERSION: ${{ steps.update.outputs.current-version }}
+      run: |
+        NEW_VERSION="${NEW_VERSION#v}"
+
+        # Fetch CHANGELOG.md from the plugin repo at the new ref.
+        # If absent, emit an empty changelog output and exit.
+        if ! gh api "repos/${SOURCE_REPO}/contents/CHANGELOG.md?ref=${NEW_REF}" --jq .content 2>/dev/null | base64 -d > /tmp/upstream-changelog.md; then
+          echo "No CHANGELOG.md at ${SOURCE_REPO}@${NEW_REF}"
+          {
+            echo "content<<CHANGELOG_EOF"
+            echo "CHANGELOG_EOF"
+          } >> "$GITHUB_OUTPUT"
+          exit 0
+        fi
+
+        # Extract version section slice (OLD_VERSION, NEW_VERSION].
+        # release-please CHANGELOG headers look like: ## [1.2.3](url) (date) OR ## 1.2.3
+        FILE=/tmp/upstream-changelog.md
+        mapfile -t HEADERS < <(grep -nE '^## \[?[0-9]+\.[0-9]+\.[0-9]+' "$FILE" | sed -E 's/^([0-9]+):## \[?([0-9]+\.[0-9]+\.[0-9]+).*/\1:\2/')
+
+        TOTAL_LINES=$(wc -l < "$FILE")
+        SLICE=""
+        for i in "${!HEADERS[@]}"; do
+          IFS=: read -r LN VER <<< "${HEADERS[$i]}"
+          NEXT_IDX=$((i + 1))
+          if [ "$NEXT_IDX" -lt "${#HEADERS[@]}" ]; then
+            NEXT_LN="${HEADERS[$NEXT_IDX]%%:*}"
+            END=$((NEXT_LN - 1))
+          else
+            END="$TOTAL_LINES"
+          fi
+
+          # Skip if VER == OLD_VERSION (range is exclusive on old)
+          [ "$VER" = "$OLD_VERSION" ] && continue
+          # Keep only if OLD_VERSION < VER <= NEW_VERSION
+          MAX_OLD=$(printf '%s\n%s\n' "$OLD_VERSION" "$VER" | sort -V | tail -1)
+          [ "$MAX_OLD" != "$VER" ] && continue
+          MAX_NEW=$(printf '%s\n%s\n' "$VER" "$NEW_VERSION" | sort -V | tail -1)
+          [ "$MAX_NEW" != "$NEW_VERSION" ] && continue
+
+          SECTION=$(sed -n "${LN},${END}p" "$FILE")
+          if [ -n "$SLICE" ]; then
+            SLICE="${SLICE}"$'\n\n'"${SECTION}"
+          else
+            SLICE="${SECTION}"
+          fi
+        done
+
+        {
+          echo "content<<CHANGELOG_EOF"
+          echo "${SLICE}"
+          echo "CHANGELOG_EOF"
+        } >> "$GITHUB_OUTPUT"
 
     - name: Create PR
       id: pr
@@ -86,12 +153,13 @@ runs:
       working-directory: __marketplace
       env:
         GH_TOKEN: ${{ inputs.token }}
+        PLUGIN_NAME: ${{ inputs.plugin-name }}
+        VERSION: ${{ inputs.version }}
+        REF: ${{ inputs.ref }}
+        SHA: ${{ steps.update.outputs.sha }}
+        CHANGELOG: ${{ steps.changelog.outputs.content }}
       run: |
-        PLUGIN_NAME="${{ inputs.plugin-name }}"
-        VERSION="${{ inputs.version }}"
         VERSION="${VERSION#v}"
-        REF="${{ inputs.ref }}"
-        SHA="${{ steps.update.outputs.sha }}"
         BRANCH="update/${PLUGIN_NAME}"
 
         git config user.name "github-actions[bot]"
@@ -99,12 +167,24 @@ runs:
 
         COMMIT_MSG="feat(${PLUGIN_NAME}): bump to ${VERSION}"
 
-        PR_BODY="Automated plugin version update.
-
-        - **Plugin:** \`${PLUGIN_NAME}\`
-        - **Version:** \`${VERSION}\`
-        - **Ref:** \`${REF}\`
-        - **SHA:** \`${SHA}\`"
+        PR_BODY_FILE="$(mktemp)"
+        {
+          echo "Automated plugin version update."
+          echo ""
+          echo "- **Plugin:** \`${PLUGIN_NAME}\`"
+          echo "- **Version:** \`${VERSION}\`"
+          echo "- **Ref:** \`${REF}\`"
+          echo "- **SHA:** \`${SHA}\`"
+          if [ -n "$CHANGELOG" ]; then
+            echo ""
+            echo "<details>"
+            echo "<summary>Changelog</summary>"
+            echo ""
+            echo "$CHANGELOG"
+            echo ""
+            echo "</details>"
+          fi
+        } > "$PR_BODY_FILE"
 
         # Check if branch already exists on remote
         if git ls-remote --exit-code --heads origin "$BRANCH" >/dev/null 2>&1; then
@@ -122,12 +202,12 @@ runs:
           git diff --staged --quiet && { echo "No changes needed."; echo "url="; exit 0; }
           git commit -m "$COMMIT_MSG"
           git push --force-with-lease origin "$BRANCH"
-          # Check if an open PR exists, create one if not
+          # Update existing PR body/title if present, otherwise create
           PR_URL=$(gh pr list --head "$BRANCH" --state open --json url --jq '.[0].url')
           if [ -z "$PR_URL" ]; then
-            PR_URL=$(gh pr create \
-              --title "$COMMIT_MSG" \
-              --body "$PR_BODY")
+            PR_URL=$(gh pr create --title "$COMMIT_MSG" --body-file "$PR_BODY_FILE")
+          else
+            gh pr edit "$PR_URL" --title "$COMMIT_MSG" --body-file "$PR_BODY_FILE"
           fi
           echo "url=${PR_URL}" >> "$GITHUB_OUTPUT"
         else
@@ -135,8 +215,6 @@ runs:
           git add .claude-plugin/marketplace.json
           git commit -m "$COMMIT_MSG"
           git push -u origin "$BRANCH"
-          PR_URL=$(gh pr create \
-            --title "$COMMIT_MSG" \
-            --body "$PR_BODY")
+          PR_URL=$(gh pr create --title "$COMMIT_MSG" --body-file "$PR_BODY_FILE")
           echo "url=${PR_URL}" >> "$GITHUB_OUTPUT"
         fi
