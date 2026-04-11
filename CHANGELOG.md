@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.1](https://github.com/wyattjoh/claude-code-marketplace/compare/v1.7.0...v1.7.1) (2026-04-11)
+
+
+### Bug Fixes
+
+* reuse update branch per plugin so new bumps update existing PR ([f0c9722](https://github.com/wyattjoh/claude-code-marketplace/commit/f0c97220cac423448786b8ccccc28866bbe481a3))
+
 ## [1.7.0](https://github.com/wyattjoh/claude-code-marketplace/compare/v1.6.0...v1.7.0) (2026-04-11)
 
 
