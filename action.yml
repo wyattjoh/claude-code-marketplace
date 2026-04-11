@@ -92,7 +92,7 @@ runs:
         VERSION="${VERSION#v}"
         REF="${{ inputs.ref }}"
         SHA="${{ steps.update.outputs.sha }}"
-        BRANCH="update/${PLUGIN_NAME}-${VERSION}"
+        BRANCH="update/${PLUGIN_NAME}"
 
         git config user.name "github-actions[bot]"
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
