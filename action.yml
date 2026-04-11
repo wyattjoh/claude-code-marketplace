@@ -27,7 +27,7 @@ runs:
   using: "composite"
   steps:
     - name: Checkout marketplace
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         repository: wyattjoh/claude-code-marketplace
         token: ${{ inputs.token }}
