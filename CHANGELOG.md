@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/wyattjoh/claude-code-marketplace/compare/v1.6.0...v1.7.0) (2026-04-11)
+
+
+### Features
+
+* **op-remote:** bump to 0.5.0 ([#24](https://github.com/wyattjoh/claude-code-marketplace/issues/24)) ([fa9af55](https://github.com/wyattjoh/claude-code-marketplace/commit/fa9af5548cd865db0e6f1776bb93c21052002f84))
+
 ## [1.6.0](https://github.com/wyattjoh/claude-code-marketplace/compare/v1.5.1...v1.6.0) (2026-04-09)
 
 
