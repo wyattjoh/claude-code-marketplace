@@ -32,7 +32,7 @@
     {
       "name": "op-remote",
       "description": "Remote 1Password secret access with Telegram approval for AI agents",
-      "version": "0.5.0",
+      "version": "0.5.3",
       "author": {
         "name": "Wyatt Johnson"
       },
@@ -49,8 +49,8 @@
       "source": {
         "source": "github",
         "repo": "wyattjoh/op-remote",
-        "ref": "op-remote-v0.5.0",
-        "sha": "da76ac1f27d5fcea45c3a425b977f21434a87eae"
+        "ref": "op-remote-v0.5.3",
+        "sha": "85e2ad583ad4c2fb04744fb843e1e4cd20e2b6cc"
       }
     },
     {
