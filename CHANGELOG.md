@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.0](https://github.com/wyattjoh/claude-code-marketplace/compare/v1.7.1...v1.8.0) (2026-04-11)
+
+
+### Features
+
+* embed upstream changelog slice in marketplace PR body ([3e3e506](https://github.com/wyattjoh/claude-code-marketplace/commit/3e3e506a4d7004306d36cc04a345f76044196df5))
+
 ## [1.7.1](https://github.com/wyattjoh/claude-code-marketplace/compare/v1.7.0...v1.7.1) (2026-04-11)
 
 
