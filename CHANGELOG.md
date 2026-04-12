@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.1](https://github.com/wyattjoh/claude-code-marketplace/compare/v1.9.0...v1.9.1) (2026-04-12)
+
+
+### Bug Fixes
+
+* reset working tree before checking out existing update branch ([177307c](https://github.com/wyattjoh/claude-code-marketplace/commit/177307cafc15843965b3c3d155f78d03a6c9c3fe))
+
 ## [1.9.0](https://github.com/wyattjoh/claude-code-marketplace/compare/v1.8.0...v1.9.0) (2026-04-11)
 
 
