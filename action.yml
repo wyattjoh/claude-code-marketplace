@@ -188,6 +188,7 @@ runs:
 
         # Check if branch already exists on remote
         if git ls-remote --exit-code --heads origin "$BRANCH" >/dev/null 2>&1; then
+          git checkout -- .claude-plugin/marketplace.json
           git fetch origin "$BRANCH"
           git checkout -b "$BRANCH" "origin/$BRANCH"
           git restore --source origin/main -- .claude-plugin/marketplace.json
