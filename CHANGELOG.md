@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.11.0](https://github.com/wyattjoh/claude-code-marketplace/compare/v1.10.0...v1.11.0) (2026-04-13)
+
+
+### Features
+
+* **jmap-mcp:** bump to 0.6.2 ([#38](https://github.com/wyattjoh/claude-code-marketplace/issues/38)) ([689329d](https://github.com/wyattjoh/claude-code-marketplace/commit/689329d38beb1f387b9a67a636ecb35a4ec1c1bf))
+* **stacked-prs:** bump to 1.3.1 ([#37](https://github.com/wyattjoh/claude-code-marketplace/issues/37)) ([747b32d](https://github.com/wyattjoh/claude-code-marketplace/commit/747b32d9b6bf73af733ee1b08fe5c34e9f107818))
+
 ## [1.10.0](https://github.com/wyattjoh/claude-code-marketplace/compare/v1.9.1...v1.10.0) (2026-04-12)
 
 
