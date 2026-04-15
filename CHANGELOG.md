@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.15.0](https://github.com/wyattjoh/claude-code-marketplace/compare/v1.14.0...v1.15.0) (2026-04-15)
+
+
+### Features
+
+* **dokploy-mcp:** bump to 0.7.0 ([#46](https://github.com/wyattjoh/claude-code-marketplace/issues/46)) ([34aa945](https://github.com/wyattjoh/claude-code-marketplace/commit/34aa945caa8bb1c2854cf94bbfc7e70c9f64da15))
+
 ## [1.14.0](https://github.com/wyattjoh/claude-code-marketplace/compare/v1.13.0...v1.14.0) (2026-04-15)
 
 
