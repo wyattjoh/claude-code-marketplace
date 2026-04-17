@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.22.0](https://github.com/wyattjoh/claude-code-marketplace/compare/v1.21.0...v1.22.0) (2026-04-17)
+
+
+### Features
+
+* **stacked-prs:** bump to 2.1.0 ([#60](https://github.com/wyattjoh/claude-code-marketplace/issues/60)) ([b7d5d98](https://github.com/wyattjoh/claude-code-marketplace/commit/b7d5d98bf2118eb7aaeaf89360095be9b967b35e))
+
 ## [1.21.0](https://github.com/wyattjoh/claude-code-marketplace/compare/v1.20.0...v1.21.0) (2026-04-17)
 
 
