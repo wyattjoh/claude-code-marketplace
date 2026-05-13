@@ -103,7 +103,7 @@
     {
       "name": "jmap-mcp",
       "description": "MCP server for JMAP email management",
-      "version": "0.6.3",
+      "version": "0.6.4",
       "author": {
         "name": "Wyatt Johnson"
       },
@@ -119,8 +119,8 @@
       "source": {
         "source": "github",
         "repo": "wyattjoh/jmap-mcp",
-        "ref": "jmap-mcp-v0.6.3",
-        "sha": "f4f582b2460921bffaf322c6e5f06ba9420dd3eb"
+        "ref": "jmap-mcp-v0.6.4",
+        "sha": "f0a66ac29534c47d9cee745642b58e7f0e7d95ee"
       }
     }
   ]
