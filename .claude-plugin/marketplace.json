@@ -122,6 +122,30 @@
         "ref": "jmap-mcp-v0.6.4",
         "sha": "f0a66ac29534c47d9cee745642b58e7f0e7d95ee"
       }
+    },
+    {
+      "name": "opentui-testing",
+      "description": "Snapshot-friendly testing helpers for OpenTUI React apps under bun test, plus an agent skill that teaches Claude how to use them.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Wyatt Johnson"
+      },
+      "repository": "https://github.com/wyattjoh/opentui-testing",
+      "license": "MIT",
+      "keywords": [
+        "opentui",
+        "testing",
+        "snapshot",
+        "tui",
+        "react",
+        "bun",
+        "terminal"
+      ],
+      "category": "development",
+      "source": {
+        "source": "github",
+        "repo": "wyattjoh/opentui-testing"
+      }
     }
   ]
 }
