@@ -19,6 +19,7 @@ Add this marketplace to Claude Code:
 | [dokploy-mcp](https://github.com/wyattjoh/dokploy-mcp) | MCP server that wraps the Dokploy REST API |
 | [stacked-prs](https://github.com/wyattjoh/stacked-prs) | Manage stacked branches and pull requests with git config metadata, Deno helper scripts, and the gh CLI |
 | [jmap-mcp](https://github.com/wyattjoh/jmap-mcp) | MCP server for JMAP email management |
+| [opentui-testing](https://github.com/wyattjoh/opentui-testing) | Snapshot-friendly testing helpers for OpenTUI React apps under bun test, plus an agent skill that teaches Claude how to use them. |
 
 ## Installing Plugins
 
