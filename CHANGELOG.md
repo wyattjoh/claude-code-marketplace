@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.27.0](https://github.com/wyattjoh/claude-code-marketplace/compare/v1.26.0...v1.27.0) (2026-05-14)
+
+
+### Features
+
+* **jmap-mcp:** bump to 0.6.4 ([#70](https://github.com/wyattjoh/claude-code-marketplace/issues/70)) ([79822b9](https://github.com/wyattjoh/claude-code-marketplace/commit/79822b960ab65060a828945ce6172bb514357f5a))
+* **opentui-testing:** add to marketplace registry ([24529c2](https://github.com/wyattjoh/claude-code-marketplace/commit/24529c27c746820bf75bc3568b0fac365e8e4d3a))
+* **opentui-testing:** bump to 1.0.1 ([#75](https://github.com/wyattjoh/claude-code-marketplace/issues/75)) ([187e912](https://github.com/wyattjoh/claude-code-marketplace/commit/187e912bb715d3663d94455b3adea0f7a173aa20))
+* **stacked-prs:** bump to 2.4.1 ([#73](https://github.com/wyattjoh/claude-code-marketplace/issues/73)) ([e06a57f](https://github.com/wyattjoh/claude-code-marketplace/commit/e06a57f7271da82e77b91197359420a5f2727c49))
+
 ## [1.26.0](https://github.com/wyattjoh/claude-code-marketplace/compare/v1.25.0...v1.26.0) (2026-04-27)
 
 
